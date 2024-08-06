@@ -47,7 +47,8 @@ app.use("/api/v1/payment", paymentRoutes);
 
 // Default route
 app.get("/", (req, res) => {
-    res.json({
+    return res.json(
+        {
         success: true,
         message: 'Your server is up and running....',
     });
@@ -62,4 +63,6 @@ app.use((err, req, res, next) => {
 // Start the server
 app.listen(PORT, () => {
     console.log(`App is running at ${PORT}`);
+    console.log("Server connected successfully and is ready to handle requests.");
+
 });
