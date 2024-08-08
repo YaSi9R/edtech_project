@@ -24,7 +24,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
     cors({
-        origin: "http://localhost:3000",
+        // origin: "http://localhost:3000",
+        origin: "https://studysphere-jade.vercel.app", // Update this to your Vercel frontend URL
+        methods: ["GET", "POST", "PUT", "DELETE"],
+
         credentials: true,
     })
 );
@@ -49,9 +52,9 @@ app.use("/api/v1/payment", paymentRoutes);
 app.get("/", (req, res) => {
     return res.json(
         {
-        success: true,
-        message: 'Your server is up and running....',
-    });
+            success: true,
+            message: 'Your server is up and running....',
+        });
 });
 
 // Global error handler
