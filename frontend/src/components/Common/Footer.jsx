@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 import Logo from "../../assets/Logo/StudySphere.png";
 
 // Icons
-import { FaFacebook, FaGoogle, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 const BottomFooter = ["Privacy Policy", "Cookie Policy", "Terms"];
 const Resources = [
@@ -48,8 +49,8 @@ const Footer = () => {
               </div>
               <div className="flex gap-3 text-lg">
                 <FaFacebook />
-                <FaGoogle />
-                <FaTwitter />
+                <FaInstagram />
+                <FaXTwitter />
                 <FaYoutube />
               </div>
               <div></div>
