@@ -12,24 +12,24 @@ import { ACCOUNT_TYPE } from "../../utils/constants"
 import ProfileDropdown from "../core/Auth/ProfileDropdown"
 import SideBar from "../core/HomePage/SideBar"
 
-const subLinks = [
-  {
-    title: "Python",
-    link: "/catalog/python",
-  },
-  {
-    title: "javascript",
-    link: "/catalog/javascript",
-  },
-  {
-    title: "web-development",
-    link: "/catalog/web-development",
-  },
-  {
-    title: "Android Development",
-    link: "/catalog/Android Development",
-  },
-];
+// const subLinks = [
+//   {
+//     title: "Python",
+//     link: "/catalog/python",
+//   },
+//   {
+//     title: "javascript",
+//     link: "/catalog/javascript",
+//   },
+//   {
+//     title: "web-development",
+//     link: "/catalog/web-development",
+//   },
+//   {
+//     title: "Android Development",
+//     link: "/catalog/Android Development",
+//   },
+// ];
 
 function Navbar() {
   const { token } = useSelector((state) => state.auth)
@@ -40,19 +40,19 @@ function Navbar() {
   // const [subLinks, setSubLinks] = useState([])
   const [loading, setLoading] = useState(false)
 
-  // useEffect(() => {
-    // ; (async () => {
-    //   setLoading(true)
-    //   try {
-    //     const res = await apiConnector("GET", categories.CATEGORIES_API)
-    //     setSubLinks(res.data.data)
-    //     console.log("try kar rahe hai sublinks ka")
-    //   } catch (error) {
-    //     console.log("Could not fetch Categories.", error)
-    //   }
-    //   setLoading(false)
-    // })()
-  // }, [])
+  useEffect(() => {
+    ; (async () => {
+      setLoading(true)
+      try {
+        const res = await apiConnector("GET", categories.CATEGORIES_API)
+        setSubLinks(res.data.data)
+        console.log("try kar rahe hai sublinks ka")
+      } catch (error) {
+        console.log("Could not fetch Categories.", error)
+      }
+      setLoading(false)
+    })()
+  }, [])
 
   // console.log("sub links", subLinks)
 
