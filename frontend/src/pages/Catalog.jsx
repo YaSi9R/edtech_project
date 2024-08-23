@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Footer from '../components/Common/Footer'
 import { useParams } from 'react-router-dom'
-import { apiConnector } from '../services/apiconnector';
+import { apiConnector } from '../services/apiConnector';
 import { categories } from '../services/apis';
-import { getCatalogaPageData } from '../services/operations/pageAndComponentData';
+import { getCatalogaPageData } from '../services/operations/pageAndComponntDatas';
 import Course_Card from '../components/core/Catalog/Course_Card';
-import CourseSlider from '../components/core/Catalog/CourseSlider';
+import CourseSlider from '../components/core/Catalog/Course_Slider';
 import { useSelector } from "react-redux"
 import Error from "./Error"
 
