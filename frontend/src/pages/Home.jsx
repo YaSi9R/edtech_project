@@ -13,8 +13,7 @@ import ExploreMore from "../components/core/HomePage/ExploreMore"
 import HighlightText from "../components/core/HomePage/HighlightText"
 import InstructorSection from "../components/core/HomePage/InstructorSection"
 import LearningLanguageSection from "../components/core/HomePage/LearningLanguageSection"
-import TimelineSection from "../components/core/HomePage/Timeline"
-import Course_Slider from "../components/core/Catalog/Course_Slider"
+import TimelineSection from "../components/core/HomePage/TimelineSection"
 
 function Home() {
   return (
@@ -32,7 +31,7 @@ function Home() {
         </Link>
 
         {/* Heading */}
-        <div className="text-center text-4xl font-semibold" >
+        <div className="text-center text-4xl font-semibold">
           Empower Your Future with
           <HighlightText text={"Coding Skills"} />
         </div>
@@ -126,11 +125,7 @@ function Home() {
           />
         </div>
 
-        {/* Course_Slider */}
-              <Course_Slider/>
-
         {/* Explore Section */}
-
         <ExploreMore />
       </div>
 
