@@ -5,7 +5,7 @@ const userRoutes = require("./routes/User");
 const profileRoutes = require("./routes/Profile");
 const paymentRoutes = require("./routes/Payments");
 const courseRoutes = require("./routes/Course");
-
+const contactUsRoute = require("./routes/Contact");
 const database = require("./config/database");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -24,8 +24,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
     cors({
-        // origin: "http://localhost:3000",
-        origin: "https://studyspheree.vercel.app", 
+        origin: "http://localhost:3000/",
+        // origin: "https://studyspheree.vercel.app", 
         methods: ["GET", "POST", "PUT", "DELETE"],
 
         credentials: true,
@@ -47,6 +47,7 @@ app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/payment", paymentRoutes);
+app.use("/api/v1/reach", contactUsRoute);
 
 // Default route
 app.get("/", (req, res) => {
