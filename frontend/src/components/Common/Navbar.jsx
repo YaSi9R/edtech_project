@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { AiOutlineMenu,AiOutlineClose, AiOutlineShoppingCart } from "react-icons/ai"
+import { AiOutlineMenu, AiOutlineClose, AiOutlineShoppingCart } from "react-icons/ai"
 import { BsChevronDown } from "react-icons/bs"
 import { useSelector } from "react-redux"
 import { Link, matchPath, useLocation } from "react-router-dom"
@@ -41,18 +41,20 @@ function Navbar() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    ; (async () => {
-      setLoading(true)
+    (async () => {
+      setLoading(true);
       try {
-        const res = await apiConnector("GET", categories.CATEGORIES_API)
-        setSubLinks(res.data.data)
-        console.log("try kar rahe hai sublinks ka")
+        const res = await apiConnector("GET", categories.CATEGORIES_API);
+        console.log("API Response:", res);
+        setSubLinks(res.data.data || []);
+        console.log("subLinks updated:", res.data.data);
       } catch (error) {
-        console.log("Could not fetch Categories.", error)
+        console.log("Could not fetch Categories.", error);
       }
-      setLoading(false)
-    })()
-  }, [])
+      setLoading(false);
+    })();
+  }, []);
+
 
   // console.log("sub links", subLinks)
 
@@ -83,8 +85,8 @@ function Navbar() {
                   <>
                     <div
                       className={`group relative flex cursor-pointer items-center gap-1 ${matchRoute("/catalog/:catalogName")
-                          ? "text-yellow-25"
-                          : "text-richblack-25"
+                        ? "text-yellow-25"
+                        : "text-richblack-25"
                         }`}
                     >
                       <p>{link.title}</p>
@@ -96,25 +98,23 @@ function Navbar() {
                         ) : subLinks.length ? (
                           <>
                             {subLinks
-                              ?.filter(
-                                (subLink) => subLink?.courses?.length > 0
-                              )
+                              ?.filter(subLink => subLink) // Temporary filter to check if any data renders
                               ?.map((subLink, i) => (
                                 <Link
-                                  to={`/catalog/${subLink.name
-                                    .split(" ")
-                                    .join("-")
-                                    .toLowerCase()}`}
+                                  to={`/catalog/${subLink.name.split(" ").join("-").toLowerCase()}`}
                                   className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50"
                                   key={i}
                                 >
                                   <p>{subLink.name}</p>
                                 </Link>
                               ))}
+
+
                           </>
                         ) : (
                           <p className="text-center">No Courses Found</p>
                         )}
+
                       </div>
                     </div>
                   </>
@@ -122,8 +122,8 @@ function Navbar() {
                   <Link to={link?.path}>
                     <p
                       className={`${matchRoute(link?.path)
-                          ? "text-yellow-25"
-                          : "text-richblack-25"
+                        ? "text-yellow-25"
+                        : "text-richblack-25"
                         }`}
                     >
                       {link.title}
@@ -165,7 +165,7 @@ function Navbar() {
 
         {/* Mobile dropdown */}
         <button className="mr-4 md:hidden" onClick={() => setOpen(!open)}>
-        {open ? <AiOutlineClose fontSize={24} fill="#AFB2BF" /> : <AiOutlineMenu fontSize={24} fill="#AFB2BF" />}
+          {open ? <AiOutlineClose fontSize={24} fill="#AFB2BF" /> : <AiOutlineMenu fontSize={24} fill="#AFB2BF" />}
           {/* {open ? (
             <AiOutlineClose fontSize={24} fill="#AFB2BF" />
           ) : (
@@ -182,7 +182,7 @@ function Navbar() {
       {open && (
         <div className="absolute top-14 left-0 right-0 z-40 bg-richblack-800 p-4 md:hidden ">
           <button className="absolute top-4 right-8 z-50" onClick={toggleOpen}>
-            
+
           </button>
           <SideBar
             NavbarLinks={NavbarLinks}
