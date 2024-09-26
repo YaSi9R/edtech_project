@@ -61,8 +61,13 @@ app.get("/", (req, res) => {
 // Global error handler
 app.use((err, req, res, next) => {
     console.error("Global error handler:", err.stack);
-    res.status(500).send("Something broke!");
+    res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
+        error: err.message
+    });
 });
+
 
 // Start the server
 app.listen(PORT, () => {
