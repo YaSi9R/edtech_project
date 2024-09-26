@@ -27,45 +27,49 @@ exports.createCourse = async (req, res) => {
     // Get thumbnail image from request files
     const thumbnail = req.files?.thumbnailImage;
 
+// Convert the tag and instructions from stringified Array to Array
+const tag = JSON.parse(_tag)
+const instructions = JSON.parse(_instructions)
+
     // Log incoming data for debugging
-    console.log("Received Data:", {
-      courseName,
-      courseDescription,
-      whatYouWillLearn,
-      price,
-      _tag,
-      category,
-      status,
-      _instructions,
-      thumbnail,
-    });
+    // console.log("Received Data:", {
+    //   courseName,
+    //   courseDescription,
+    //   whatYouWillLearn,
+    //   price,
+    //   _tag,
+    //   category,
+    //   status,
+    //   _instructions,
+    //   thumbnail,
+    // });
 
     // Convert the tag and instructions from stringified Array to Array
-    console.log("Before Tag Data:", _tag);
-    console.log("Instructions Data:", _instructions);
+    console.log("Before Tag Data:", tag);
+    console.log("Instructions Data:", instructions);
 
-    let tag, instructions;
-    try {
-      // Check if _tag is a valid JSON array, if not wrap it in an array
-      tag = _tag.startsWith("[") && _tag.endsWith("]") ? JSON.parse(_tag) : [_tag];
+    
+    // try {
+    //   // Check if _tag is a valid JSON array, if not wrap it in an array
+    //   tag = _tag.startsWith("[") && _tag.endsWith("]") ? JSON.parse(_tag) : [_tag];
       
-      // Handle instructions similarly
-      instructions = _instructions
-        ? _instructions.startsWith("[") && _instructions.endsWith("]")
-          ? JSON.parse(_instructions)
-          : [_instructions]
-        : [];
+    //   // Handle instructions similarly
+    //   instructions = _instructions
+    //     ? _instructions.startsWith("[") && _instructions.endsWith("]")
+    //       ? JSON.parse(_instructions)
+    //       : [_instructions]
+    //     : [];
 
-    } catch (error) {
-      console.error("Error parsing JSON:", error.message);
-      return res.status(400).json({
-        success: false,
-        message: "Invalid input format for tag or instructions",
-      });
-    }
+    // } catch (error) {
+    //   console.error("Error parsing JSON:", error.message);
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Invalid input format for tag or instructions",
+    //   });
+    // }
 
-    console.log("Parsed Tag:", tag);
-    console.log("Parsed Instructions:", instructions);
+    // console.log("Parsed Tag:", tag);
+    // console.log("Parsed Instructions:", instructions);
 
     // Check if any of the required fields are missing
     if (
@@ -75,7 +79,8 @@ exports.createCourse = async (req, res) => {
       !price ||
       !tag.length ||
       !thumbnail ||
-      !category 
+      !category ||
+      !instructions.length
       
     ) {
       return res.status(400).json({
@@ -138,34 +143,31 @@ exports.createCourse = async (req, res) => {
     );
 
     // Add the new course to the Categories
-    await Category.findByIdAndUpdate(
-      { _id: category },
-      { $push: { courses: newCourse._id } },
-      { new: true }
-    );
+   // Add the new course to the Categories
+   const categoryDetails2 = await Category.findByIdAndUpdate(
+    { _id: category },
+    {
+      $push: {
+        courses: newCourse._id,
+      },
+    },
+    { new: true }
+  )
+  console.log("HEREEEEEEEE", categoryDetails2)
 
     // Return the new course and a success message
-    res.status(201).json({
+    res.status(200).json({
       success: true,
-      message: "Course created successfully",
-      course: {
-        courseName,
-        courseDescription,
-        whatYouWillLearn,
-        price,
-        tag,
-        category,
-        status,
-        instructions,
-        thumbnail,
-      },
-    });
-
+      data: newCourse,
+      message: "Course Created Successfully",
+    })
   } catch (error) {
-    console.error("Error creating course:", error.message);
+    // Handle any errors that occur during the creation of the course
+    console.error(error)
     res.status(500).json({
       success: false,
-      message: "Server error, please try again later",
+      message: "Failed to create course",
+      error: error.message,
     });
   }
 };
