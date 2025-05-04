@@ -41,19 +41,28 @@ function Navbar() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    let isMounted = true;
+  
     (async () => {
       setLoading(true);
       try {
         const res = await apiConnector("GET", categories.CATEGORIES_API);
-        console.log("API Response:", res);
-        setSubLinks(res.data.data || []);
-        console.log("subLinks updated:", res.data.data);
+        if (isMounted) {
+          setSubLinks(res.data.data || []);
+          console.log("subLinks updated:", res.data.data);
+        }
       } catch (error) {
-        console.log("Could not fetch Categories.", error);
+        if (isMounted) console.log("Could not fetch Categories.", error);
+      } finally {
+        if (isMounted) setLoading(false);
       }
-      setLoading(false);
     })();
+  
+    return () => {
+      isMounted = false;
+    };
   }, []);
+  
 
 
   // console.log("sub links", subLinks)
