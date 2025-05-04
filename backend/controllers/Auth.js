@@ -225,6 +225,7 @@ exports.sendotp = async (req, res) => {
 	}
   };
   
+  
 
 // Controller for Changing Password
 exports.changePassword = async (req, res) => {
