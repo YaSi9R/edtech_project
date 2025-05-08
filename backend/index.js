@@ -22,9 +22,11 @@ database.connect();
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
+const url="http://localhost:3000" || "https://studyspheree.vercel.app"
+
 app.use(
     cors({
-        origin: "http://localhost:3000",
+        origin:{url},
         // origin: "https://studyspheree.vercel.app", 
         methods: ["GET", "POST", "PUT", "DELETE"],
 
