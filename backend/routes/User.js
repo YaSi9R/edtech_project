@@ -9,10 +9,8 @@ const {
   sendotp,
   changePassword,
 } = require("../controllers/Auth")
-const {
-  resetPasswordToken,
-  resetPassword,
-} = require("../controllers/resetPassword")
+
+const{resetPassword}=require("../controllers/resetPassword")
 
 const { auth } = require("../middleware/auth")
 
