@@ -24,11 +24,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
     cors({
-        // origin: "http://localhost:3000",
-        origin: "https://studyspheree.vercel.app", 
+        origin: "http://localhost:3000",
+        // origin: "https://studyspheree.vercel.app", 
         methods: ["GET", "POST", "PUT", "DELETE"],
 
-        credentials: true,
+        // credentials: true,
     })
 );
 
@@ -54,7 +54,7 @@ app.get("/", (req, res) => {
     return res.json(
         {
             success: true,
-            message: 'Your server is up and running....',
+            message: 'server working....',
         });
 });
 

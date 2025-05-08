@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react"
-import { AiOutlineMenu, AiOutlineClose, AiOutlineShoppingCart } from "react-icons/ai"
+import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai"
 import { BsChevronDown } from "react-icons/bs"
 import { useSelector } from "react-redux"
 import { Link, matchPath, useLocation } from "react-router-dom"
 
-import logo from "../../assets/Logo/StudySphere.png"
+import logo from "../../assets/Logo/Study (3) (1).png"
 import { NavbarLinks } from "../../data/navbar-links"
 import { apiConnector } from "../../services/apiConnector"
 import { categories } from "../../services/apis"
 import { ACCOUNT_TYPE } from "../../utils/constants"
 import ProfileDropdown from "../core/Auth/ProfileDropdown"
-import SideBar from "../core/Dashboard/Sidebar"
 
 // const subLinks = [
 //   {
@@ -41,29 +40,17 @@ function Navbar() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    let isMounted = true;
-  
-    (async () => {
-      setLoading(true);
+    ;(async () => {
+      setLoading(true)
       try {
-        const res = await apiConnector("GET", categories.CATEGORIES_API);
-        if (isMounted) {
-          setSubLinks(res.data.data || []);
-          console.log("subLinks updated:", res.data.data);
-        }
+        const res = await apiConnector("GET", categories.CATEGORIES_API)
+        setSubLinks(res.data.data)
       } catch (error) {
-        if (isMounted) console.log("Could not fetch Categories.", error);
-      } finally {
-        if (isMounted) setLoading(false);
+        console.log("Could not fetch Categories.", error)
       }
-    })();
-  
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-  
-
+      setLoading(false)
+    })()
+  }, [])
 
   // console.log("sub links", subLinks)
 
@@ -71,14 +58,11 @@ function Navbar() {
     return matchPath({ path: route }, location.pathname)
   }
 
-  const [open, setOpen] = useState(false);
-  const toggleOpen = () => setOpen(!open);
-
-
   return (
     <div
-      className={`flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 ${location.pathname !== "/" ? "bg-richblack-800" : ""
-        } transition-all duration-200`}
+      className={`flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 ${
+        location.pathname !== "/" ? "bg-richblack-800" : ""
+      } transition-all duration-200`}
     >
       <div className="flex w-11/12 max-w-maxContent items-center justify-between">
         {/* Logo */}
@@ -93,10 +77,11 @@ function Navbar() {
                 {link.title === "Catalog" ? (
                   <>
                     <div
-                      className={`group relative flex cursor-pointer items-center gap-1 ${matchRoute("/catalog/:catalogName")
-                        ? "text-yellow-25"
-                        : "text-richblack-25"
-                        }`}
+                      className={`group relative flex cursor-pointer items-center gap-1 ${
+                        matchRoute("/catalog/:catalogName")
+                          ? "text-yellow-25"
+                          : "text-richblack-25"
+                      }`}
                     >
                       <p>{link.title}</p>
                       <BsChevronDown />
@@ -107,33 +92,36 @@ function Navbar() {
                         ) : subLinks.length ? (
                           <>
                             {subLinks
-                              ?.filter(subLink => subLink) // Temporary filter to check if any data renders
+                              ?.filter(
+                                (subLink) => subLink?.courses?.length > 0
+                              )
                               ?.map((subLink, i) => (
                                 <Link
-                                  to={`/catalog/${subLink.name.split(" ").join("-").toLowerCase()}`}
+                                  to={`/catalog/${subLink.name
+                                    .split(" ")
+                                    .join("-")
+                                    .toLowerCase()}`}
                                   className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50"
                                   key={i}
                                 >
                                   <p>{subLink.name}</p>
                                 </Link>
                               ))}
-
-
                           </>
                         ) : (
                           <p className="text-center">No Courses Found</p>
                         )}
-
                       </div>
                     </div>
                   </>
                 ) : (
                   <Link to={link?.path}>
                     <p
-                      className={`${matchRoute(link?.path)
-                        ? "text-yellow-25"
-                        : "text-richblack-25"
-                        }`}
+                      className={`${
+                        matchRoute(link?.path)
+                          ? "text-yellow-25"
+                          : "text-richblack-25"
+                      }`}
                     >
                       {link.title}
                     </p>
@@ -171,39 +159,10 @@ function Navbar() {
           )}
           {token !== null && <ProfileDropdown />}
         </div>
-
-        {/* Mobile dropdown */}
-        <button className="mr-4 md:hidden" onClick={() => setOpen(!open)}>
-          {open ? <AiOutlineClose fontSize={24} fill="#AFB2BF" /> : <AiOutlineMenu fontSize={24} fill="#AFB2BF" />}
-          {/* {open ? (
-            <AiOutlineClose fontSize={24} fill="#AFB2BF" />
-          ) : (
-            <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
-          )} */}
-
+        <button className="mr-4 md:hidden">
+          <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
         </button>
-
-
-
-
       </div>
-
-      {open && (
-        <div className="absolute top-14 left-0 right-0 z-40 bg-richblack-800 p-4 md:hidden ">
-          <button className="absolute top-4 right-8 z-50" onClick={toggleOpen}>
-
-          </button>
-          <SideBar
-            NavbarLinks={NavbarLinks}
-            matchRoute={matchRoute}
-            loading={loading}
-            subLinks={subLinks}
-            toggleOpen={toggleOpen}
-          />
-        </div>
-      )}
-      {/* <SideBar open={open} toggleOpen={toggleOpen} NavbarLinks={NavbarLinks} matchRoute={matchRoute} /> */}
-
     </div>
   )
 }

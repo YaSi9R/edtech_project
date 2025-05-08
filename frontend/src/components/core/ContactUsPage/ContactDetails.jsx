@@ -8,14 +8,14 @@ const contactDetails = [
     icon: "HiChatBubbleLeftRight",
     heading: "Chat on us",
     description: "Our friendly team is here to help.",
-    details: "info@StudySphere.com",
+    details: "info@studynotion.com",
   },
   {
     icon: "BiWorld",
     heading: "Visit us",
     description: "Come and say hello at our office HQ.",
     details:
-      "Knowledge Park-II Greater Noida",
+      "Akshya Nagar 1st Block 1st Cross, Rammurthy nagar, Bangalore-560016",
   },
   {
     icon: "IoCall",

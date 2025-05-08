@@ -3,11 +3,10 @@ import { FooterLink2 } from "../../data/footer-links";
 import { Link } from "react-router-dom";
 
 // Images
-import Logo from "../../assets/Logo/StudySphere.png";
+import Logo from "../../assets/Logo/Logo-Full-Light.png";
 
 // Icons
-import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaFacebook, FaGoogle, FaTwitter, FaYoutube } from "react-icons/fa";
 
 const BottomFooter = ["Privacy Policy", "Cookie Policy", "Terms"];
 const Resources = [
@@ -49,8 +48,8 @@ const Footer = () => {
               </div>
               <div className="flex gap-3 text-lg">
                 <FaFacebook />
-                <FaInstagram />
-                <FaXTwitter />
+                <FaGoogle />
+                <FaTwitter />
                 <FaYoutube />
               </div>
               <div></div>
