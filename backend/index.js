@@ -29,7 +29,7 @@ const allowedOrigins = [
 
 app.use(
     cors({
-        origin: "https://studyspheree.vercel.app",
+        origin: "https://studyspheree-iota.vercel.app",
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true,
     })
